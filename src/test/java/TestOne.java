@@ -10,6 +10,7 @@ public class TestOne {
     private String chromeDriver = "webdriver.chrome.driver";
     private String baseUrl = "http://www.google.com";
     Dimension dimension;
+    private String filesPath = "D:\\IdeaProjects\\go.selenium\\src\\main\\resources\\executables\\files";
 
     @Test
     public void googleOpenTest() {
