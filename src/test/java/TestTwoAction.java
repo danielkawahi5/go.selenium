@@ -3,6 +3,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import javax.swing.*;
 import java.util.List;
 
 public class TestTwoAction {
@@ -79,8 +80,97 @@ public class TestTwoAction {
         List<WebElement> labels = driver.findElements(By.tagName("label"));
         System.out.println("label is : " + labels.size());
         driver.quit();
-
-
     }
 
+    @Test
+    public void checkBoxTest() {
+        settingProperties();
+        driver = new ChromeDriver();
+        driver.get(filesPath);
+
+        //WebElement checkBox = driver.findElement(By.xpath("/html/body/label[2]/input"));
+        WebElement checkBox = driver.findElement(By.xpath("//input[@type='checkbox']"));
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        checkBox.click();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        checkBox.click();
+        driver.quit();
+    }
+
+    @Test
+    public void radioButtonTest() {
+        settingProperties();
+        driver = new ChromeDriver();
+        driver.get(filesPath);
+
+        WebElement radioButton = driver.findElement(By.xpath("//input[@value='male']"));
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        radioButton.click();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        driver.quit();
+        System.exit(0);
+    }
+
+    @Test
+    public void testForBlablaaa() {
+        settingProperties();
+        driver = new ChromeDriver();
+        driver.get(filesPath);
+
+        WebElement checkBox = driver.findElement(By.xpath("//input[@type='checkbox']"));
+        checkBox.click();
+
+        WebElement radioButton = driver.findElement(By.xpath("//input[@value='male']"));
+        radioButton.click();
+
+        driver.quit();
+    }
+
+    @Test
+    public void hidden() {
+        settingProperties();
+        driver = new ChromeDriver();
+        driver.get(filesPath);
+
+        WebElement hidden = driver.findElement(By.className("topSecret")); //nope
+        System.out.println(hidden.getAttribute("value")); //nope
+        System.out.println(hidden.getAttribute("textContent")); //good
+        driver.quit();
+    }
+
+    @Test
+    public void imageTest() {
+        settingProperties();
+        driver = new ChromeDriver();
+        driver.get(filesPath);
+
+        WebElement image = driver.findElement(By.id("smileImage"));
+        System.out.println(image.getAttribute("naturalHeight"));
+        System.out.println(image.getSize().getHeight());
+
+    }
 }
