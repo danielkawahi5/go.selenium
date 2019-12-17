@@ -2,6 +2,8 @@ import org.junit.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.List;
+
 public class TestOne {
 
     private String chromeDriverPath = "D:\\IdeaProjects\\go.selenium\\src\\main\\resources\\executables\\drivers\\chromedriver.exe";
@@ -101,7 +103,38 @@ public class TestOne {
         driver.findElement(By.cssSelector("#gh-ac")).sendKeys("samsung");
         driver.findElement(By.cssSelector("#gh-btn")).click();
         javascriptExecutor.executeScript("window.scrollBy(0,900)");
-        //driver.quit();
+        driver.quit();
+    }
+
+    @Test
+    public void xPathSimpleSelectors() {
+        settingProperties();
+        driver = new ChromeDriver();
+        driver.get(filesPath);
+        WebElement clickOnMeXpathButton = driver.findElement(By.xpath("/html/body/button"));
+        WebElement clickOnMeXpathButton2 = driver.findElement(By.xpath("//button"));
+        WebElement linksXpath = driver.findElement(By.xpath("//a"));
+        WebElement topSecret = driver.findElement(By.xpath("//p[@class='topSecret']"));
+        WebElement topSecret2 = driver.findElement(By.xpath("//*[@class='topSecret']"));
+        WebElement linkText = driver.findElement(By.xpath("//a[text()='Visit W3Schools.com!']"));
+        driver.quit();
+    }
+
+    @Test
+    public void locating() {
+        settingProperties();
+        driver = new ChromeDriver();
+        driver.get(filesPath);
+
+        WebElement firstLink = driver.findElement(By.tagName("a"));
+
+        List<WebElement> links = driver.findElements(By.tagName("a")); // nie rzuca wyjątku, lista jest pusta, test przechodzi
+        if (links.size() > 0) {
+            System.out.println("links exists whooooo " + links.size());
+        } else {
+            System.out.println("NOTHING");
+        }
+        driver.quit();
     }
 }
 

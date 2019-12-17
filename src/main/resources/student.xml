@@ -1,0 +1,32 @@
+<students>
+    <student>
+        <name lang="en">John</name>
+        <lastname class="pencilKiller">Wick</lastname>
+        <lastname>Wick</lastname>
+        <specialization>Sociology</specialization>
+        <year>3</year>
+        <group>1</group>
+    </student>
+</students>
+
+<!--
+/students/student/name
+
+//name
+
+//students//name
+
+//name[text()='John']
+
+//specialization[text()='Sociology']
+
+//lastname
+
+//lastname[@lang='en'] : nothing
+
+//lastname[@class='red'] : good
+
+//a : all links in structure
+
+//*[text()='Kowalski']
+-->
