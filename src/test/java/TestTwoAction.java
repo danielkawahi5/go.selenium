@@ -4,7 +4,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import javax.swing.*;
+import java.sql.Driver;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
 public class TestTwoAction {
 
@@ -171,6 +174,123 @@ public class TestTwoAction {
         WebElement image = driver.findElement(By.id("smileImage"));
         System.out.println(image.getAttribute("naturalHeight"));
         System.out.println(image.getSize().getHeight());
+        driver.quit();
 
+    }
+
+    @Test
+    public void isEditable() {
+        settingProperties();
+        driver = new ChromeDriver();
+        driver.get(filesPath);
+
+        WebElement input = driver.findElement(By.name("fname"));
+        if (input.isEnabled()) {
+            System.out.println("is enabled");
+            input.sendKeys("Helouu");
+        } else {
+            System.out.println("is disabled");
+        }
+        driver.quit();
+    }
+
+    @Test
+    public void isCheckBoxChecked() {
+        settingProperties();
+        driver = new ChromeDriver();
+        driver.get(filesPath);
+
+        WebElement checkbox = driver.findElement(By.xpath("//input[@type='checkbox']"));
+        if (checkbox.isSelected()) {
+            System.out.println("isSelected");
+            checkbox.click();
+            System.out.println("checkbox unselected");
+        } else {
+            System.out.println("is not selected");
+        }
+        driver.quit();
+    }
+
+    @Test
+    public void canSee(){
+        settingProperties();
+        driver = new ChromeDriver();
+        driver.get(filesPath);
+
+        WebElement topSecretElement = driver.findElement(By.className("topSecret"));
+        if (topSecretElement.isDisplayed()) {
+            System.out.println("is displayed");
+            System.out.println(topSecretElement.getText());
+        } else {
+            System.out.println("is not displayed");
+            System.out.println(topSecretElement.getAttribute("textContent"));
+        }
+        driver.quit();
+    }
+
+    public boolean checkIfElementExist(By locator, WebDriver driver) {
+        if (driver.findElements(locator).size() > 0) {
+            System.out.println("Element exist on page");
+            return true;
+        }
+        System.out.println("No element");
+        return false;
+    }
+
+    public void checkIfElementExist(WebDriver driver, By locator) {
+        try {
+            driver.findElements(locator);
+            System.out.println("element exist");
+        } catch (NoSuchElementException nsee) {
+            System.out.println("element does not exist");
+        }
+    }
+
+    @Test
+    public void doesItExist() {
+        settingProperties();
+        driver = new ChromeDriver();
+        driver.get(filesPath);
+        checkIfElementExist(By.tagName("a"), driver);
+        checkIfElementExist(By.tagName("ade"), driver);
+
+        checkIfElementExist(driver, By.tagName("a"));
+        checkIfElementExist(driver, By.tagName("jsdf"));
+
+        driver.quit();
+    }
+
+    @Test
+    public void switching() {
+        settingProperties();
+        driver = new ChromeDriver();
+        driver.get(filesPath);
+        String currentWindowName = driver.getWindowHandle();
+
+        WebElement newPageButton = driver.findElement(By.id("newPage"));
+        newPageButton.click();
+
+        switchToNewWindow(driver, currentWindowName);
+
+        System.out.println("Title " + driver.getTitle());
+        System.out.println("Current URL " + driver.getCurrentUrl());
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        driver.quit();
+    }
+
+    private void switchToNewWindow(WebDriver driver, String currentWindowName) {
+        System.out.println("current window name " + currentWindowName);
+        Set<String> windows = driver.getWindowHandles();
+        System.out.println("count of windows " + windows.size());
+        for (String window : windows) {
+            if (!window.equals(currentWindowName)) {
+                driver.switchTo().window(window);
+            }
+        }
     }
 }
